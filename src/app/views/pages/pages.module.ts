@@ -1,3 +1,4 @@
+import { TestComponent } from './test/test.component';
 import { ExampleService } from './../../core/_ku/services/example.service';
 import { HttpKuUtilsService } from './../../core/_ku/utils/http-ku-utils.service';
 // Angular
@@ -10,9 +11,13 @@ import { PartialsModule } from '../partials/partials.module';
 // Pages
 import { CoreModule } from '../../core/core.module';
 import { MyPageComponent } from './my-page/my-page.component';
+import { KuHttpService } from '../../core/_ku/services/ku-http-services';
 
 @NgModule({
-	declarations: [MyPageComponent],
+	declarations: [
+		MyPageComponent,
+		TestComponent
+	],
 	exports: [],
 	imports: [
 		CommonModule,
@@ -24,6 +29,7 @@ import { MyPageComponent } from './my-page/my-page.component';
 	providers: [
 		ExampleService,
 		HttpKuUtilsService,
+		KuHttpService
 	]
 })
 export class PagesModule {

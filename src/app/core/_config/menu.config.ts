@@ -17,6 +17,12 @@ export class MenuConfig {
 					page: '/empty-component',
 				},
 				{
+					title: 'Test',
+					root: true,
+					alignment: 'left',
+					page: '/test',
+				},
+				{
 					title: 'Custom',
 					root: true,
 					alignment: 'left',

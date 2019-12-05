@@ -1,3 +1,4 @@
+import { TestComponent } from './views/pages/test/test.component';
 // Angular
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -29,6 +30,10 @@ const routes: Routes = [
 			{
 				path: 'empty-component', // <= Page URL
 				component: MyPageComponent // <= Page component registration
+			},
+			{
+				path: 'test', // <= Page URL
+				component: TestComponent // <= Page component registration
 			},
 			{
 				path: 'error/403',

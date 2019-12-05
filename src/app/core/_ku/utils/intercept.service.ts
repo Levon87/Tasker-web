@@ -18,7 +18,6 @@ export class InterceptService implements HttpInterceptor {
 	): Observable<HttpEvent<any>> {
 		let token: string = localStorage.getItem('authce9d77b308c149d5992a80073637e4d5');
 		if (token) {
-		console.log('IS TOKEN', token);
 		// modify request
 			request = request.clone({
 				setHeaders: {
