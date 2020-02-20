@@ -3,10 +3,12 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-	baseUrl: 'https://prod-icm-api.azurewebsites.net',
+	//baseUrl: 'https://prod-icm-api.azurewebsites.net',
+	baseUrl: "https://localhost:44397",
+
 	production: true,
 	isMockEnabled: true, // You have to switch this, when your real back-end is done
-	authTokenKey: 'authce9d77b308c149d5992a80073637e4d5'
+	authTokenKey: "authce9d77b308c149d5992a80073637e4d5"
 };
 
 /*
