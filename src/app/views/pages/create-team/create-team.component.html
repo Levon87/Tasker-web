@@ -96,74 +96,76 @@
 												>description
 												<strong>required</strong>
 											</mat-error>
-											<!-- <mat-hint align="start">Please enter
-												<strong>Last Name</strong>
-											</mat-hint> -->
 										</mat-form-field>
 									</div>
 								</div>
-								<div class="form-group kt-form__group row">
-									<div
-										class="col-lg-4 kt-margin-bottom-20-mobile"
+
+								<div
+									class="col-lg-4 kt-margin-bottom-20-mobile"
+								>
+									<mat-form-field
+										class="mat-form-field-fluid"
 									>
-										<mat-form-field
-											class="mat-form-field-fluid"
+										<mat-select
+											placeholder="leaderId"
+											[(ngModel)]="user.id"
+											name="id"
+											(selectionChange)="
+												selectleader(user.id)
+											"
 										>
-											<input
-												matInput
-												placeholder="leaderid"
-												type="text"
-												[(ngModel)]="team.leaderId"
-												name="leaderId"
-											/>
-											<!-- <mat-hint align="start">Please enter
-												<strong>Specialization</strong>
-											</mat-hint> -->
-										</mat-form-field>
-									</div>
-									<div
-										class="col-lg-4 kt-margin-bottom-20-mobile"
+											<mat-option>None</mat-option>
+											<mat-option
+												*ngFor="let user of users"
+												[value]="user.id"
+												>{{ user.firstName
+												}}{{ user.lastName }}
+											</mat-option>
+										</mat-select>
+									</mat-form-field>
+								</div>
+
+								<div
+									class="col-lg-4 kt-margin-bottom-20-mobile"
+								>
+									<mat-form-field class="select-form">
+										<mat-select
+											placeholder="users"
+											multiple
+											(selectionChange)="
+												selectmember($event)
+											"
+										>
+											<mat-option
+												*ngFor="let user of users"
+												[value]="user.id"
+											>
+												{{ user.firstName }}
+												{{ user.lastName }}
+											</mat-option>
+										</mat-select>
+									</mat-form-field>
+
+									<!-- <mat-form-field
+										class="mat-form-field-fluid"
 									>
-										<mat-form-field
-											class="mat-form-field-fluid"
+										<mat-selection-list
+											[(ngModel)]="user.id"
+											name="id"
 										>
-											<mat-chip-list #chipList>
-												<mat-chip
-													*ngFor="
-														let member of team.members
-													"
-													[selectable]="selectable"
-													[removable]="removable"
-													(removed)="remove(member)"
-												>
-													{{ member }}
-													<mat-icon
-														matChipRemove
-														*ngIf="removable"
-														>cancel</mat-icon
-													>
-												</mat-chip>
-												<input
-													matInput
-													placeholder="members"
-													[matChipInputFor]="chipList"
-													[matChipInputSeparatorKeyCodes]="
-														separatorKeysCodes
-													"
-													[matChipInputAddOnBlur]="
-														addOnBlur
-													"
-													(matChipInputTokenEnd)="
-														add($event)
-													"
-												/>
-											</mat-chip-list>
-										</mat-form-field>
-									</div>
-									<!-- <button (click)="updateMembers($event)">
+											<mat-option
+												*ngFor="let user of users"
+											>
+												{{ user.firstName }}
+												{{ user.lastName }}
+											</mat-option>
+										</mat-selection-list> -->
+
+									<!-- </mat-form-field> -->
+								</div>
+								<!-- <button (click)="updateMembers($event)">
 										Add row
 									</button> -->
-								</div>
 							</div>
 						</form>
 					</div>

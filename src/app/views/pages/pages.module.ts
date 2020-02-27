@@ -27,7 +27,8 @@ import {
 	MatFormFieldModule,
 	MatInputModule,
 	MatChipsModule,
-	MatSelectModule
+	MatSelectModule,
+	MatCheckboxModule
 } from "@angular/material";
 import { UserEditComponent } from "./user-edit/user-edit.component";
 import { RouterModule } from "@angular/router";
@@ -36,7 +37,7 @@ import { MembersComponent } from "./members/members.component";
 import { CreateTeamComponent } from "./create-team/create-team.component";
 import { BrowserModule } from "@angular/platform-browser";
 import { EditTeamComponent } from "./edit-team/edit-team.component";
-
+import { MatListModule } from "@angular/material/list";
 @NgModule({
 	declarations: [
 		TestComponent,
@@ -49,6 +50,8 @@ import { EditTeamComponent } from "./edit-team/edit-team.component";
 	],
 	exports: [],
 	imports: [
+		MatListModule,
+		MatCheckboxModule,
 		MatSelectModule,
 		ReactiveFormsModule,
 		MatIconModule,
