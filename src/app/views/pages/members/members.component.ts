@@ -11,7 +11,11 @@ import { DtoMember } from "../../../core/_ku/ku_models/api/membersDto";
 	templateUrl: "./members.component.html"
 })
 export class MembersComponent implements OnInit {
-	//public teamId: DtoTeamRequest;
+	public request: DtoTeamRequest = {
+		teamId: "",
+		userId: []
+	};
+
 	public users: DtoMember[] = [];
 	public user: DtoMember = {
 		id: "",
@@ -44,6 +48,20 @@ export class MembersComponent implements OnInit {
 	ngOnInit() {
 		this.id = this.route.snapshot.paramMap.get("id");
 		this.getMemberByTeamId();
+		this.getUsers();
+	}
+
+	public getUsers() {
+		this.exampleservice.getUsers().subscribe(data => {
+			this.users = data.users;
+			console.log(this.users);
+		});
+	}
+	public selectmember(data: any) {
+		//let request: DtoTeamRequest = {
+		this.request.userId = data.value;
+		this.request.teamId = this.id;
+		//};
 	}
 
 	private getMemberByTeamId() {
@@ -62,13 +80,26 @@ export class MembersComponent implements OnInit {
 		});
 	}
 
-	public RemoveTeamMember() {
-		let request: DtoTeamRequest = {
-			teamId: this.id
-			
-			
-		};
-		this.exampleservice.RemoveTeamMember(request).subscribe(() => {
+	public RemoveTeamMember(data: any): void {
+		//let request: DtoTeamRequest = {
+
+		this.request.userId.push(data.id);
+		this.request.teamId = this.id;
+		//};
+
+		this.exampleservice.RemoveTeamMember(this.request).subscribe(() => {
+			//err => {
+			//console.log(err);
+			//}
+		});
+	}
+
+	public AddTeamMember(): void {
+		//let request: DtoTeamRequest = {
+		//teamId: this.id,
+		//userId: iduser
+		//};
+		this.exampleservice.AddTeamMember(this.request).subscribe(() => {
 			//err => {
 			//console.log(err);
 			//}

@@ -58,6 +58,10 @@ export class ExampleService {
 			.pipe(map(res => res.data));
 	}
 
+	AddTeamMember(data: DtoTeamRequest) {
+		return this.kuService.operateWithBody(data, KuConfig.AddTeamMember);
+	}
+
 	// public getTeamById(id: number): Observable<DtoTeams> {
 	// 	return this.kuService
 	// 		.operate<DtoTeams>(KuConfig.GetTeam)

@@ -24,4 +24,6 @@ export class KuConfig {
 	static GetUsers = "users/get-users";
 
 	static GetUserById = "users/get-user-by-id";
+
+	static AddTeamMember = "teams/add-team-member";
 }

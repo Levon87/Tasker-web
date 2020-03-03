@@ -7,16 +7,36 @@
 	>
 		<ng-container ktPortletTools>
 			<button
-				[routerLink]="['create-team']"
-				class="btn btn-primary kt-margin-r-20"
-				mat-raised-button
+				(click)="AddTeamMember($event)"
+				class="btn btn-primary kt-margin-r-10"
 				color="primary"
-				matTooltip="Create new User"
+				mat-raised-button
+				matTooltip="Save & Continue"
 			>
-				Add Member
+				<span class="kt-hidden-mobile">Add Member</span>
 			</button>
 			<!-- Buttons (Material Angular) | See off.documenations 'https://material.angular.io/components/button/overview' -->
 			<!-- mat-raised-button | Rectangular contained button w/ elevation  -->
+
+			<div class="col-lg-4 kt-margin-bottom-20-mobile">
+				<form class="kt-form kt-form--group-seperator-dashed">
+					<mat-form-field class="select-form">
+						<mat-select
+							placeholder="List of Users"
+							multiple
+							(selectionChange)="selectmember($event)"
+						>
+							<mat-option
+								*ngFor="let user of users"
+								[value]="user.id"
+							>
+								{{ user.firstName }}
+								{{ user.lastName }}
+							</mat-option>
+						</mat-select>
+					</mat-form-field>
+				</form>
+			</div>
 		</ng-container>
 	</kt-portlet-header>
 	<!-- end::Header -->
@@ -90,23 +110,12 @@
 						actions
 					</mat-header-cell>
 					<mat-cell *matCellDef="let element">
-						<!-- <button
-							[routerLink]="['edit-team', element.id]"
-							click="getTeam(user.id)"
-							mat-icon-button
-							color="primary"
-							matTooltip="Edit user"
-						>
-							<mat-icon>create</mat-icon></button
-						>&nbsp; -->
-
 						<button
-							[(ngModel)]="user.id"
-							(click)="RemoveTeamMember('user.id')"
+							(click)="RemoveTeamMember(element)"
 							mat-icon-button
 							color="warn"
 							matTooltip="Delete user"
-							type="button"
+							matTooltip="Save & Continue"
 						>
 							<mat-icon>delete</mat-icon>
 						</button>
