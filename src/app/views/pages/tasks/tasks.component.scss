@@ -1,0 +1,22 @@
+::ng-deep {
+	.cdk-overlay-container {
+		z-index: 1051 !important;
+		.mat-select-panel {
+			font-size: 15px !important;
+		}
+	}
+	.tasksHeader {
+		mat-form-field {
+			.mat-form-field-wrapper {
+				padding-top: 1.34375em;
+				margin-right: 1em;
+			}
+		}
+	}
+	::before {
+		modal-dialog {
+			height: 30px;
+			width: 50px;
+		}
+	}
+}

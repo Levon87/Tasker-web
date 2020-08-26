@@ -4,7 +4,7 @@
 	<button (click)="addTask()">Create New Task</button>
 	<div class="col-lg-12">
 		<label>Title</label>
-		<input type="text" [(ngModel)]="task.title" />
+		<input type="text" [(ngModel)]="task.id" />
 	</div>
 	<div class="col-lg-12">
 		<label>Description</label>
@@ -14,7 +14,5 @@
 		<label>Status</label>
 		<input type="text" [(ngModel)]="task.status" />
 	</div> -->
-	<div class="col-lg-12" *ngFor="let task of tasks">
-		{{task.title}}
-	</div>
+	<div class="col-lg-12" *ngFor="let task of tasks"></div>
 </div>

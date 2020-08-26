@@ -1,6 +1,6 @@
 import { Component, ViewChild, OnInit, ChangeDetectorRef } from "@angular/core";
 import { MatPaginator, MatTableDataSource } from "@angular/material";
-import { ExampleService } from "./../../../core/_ku/services/example.service";
+import { TaskerService } from "../../../core/_ku/services/tasker.service";
 import { DtoTeam, DtoTeams } from "../../../core/_ku/ku_models/api/teamsDto";
 import { FormGroup, FormBuilder, FormArray } from "@angular/forms";
 import { TeamsComponent } from "../teams/teams.component";
@@ -31,7 +31,7 @@ export class CreateTeamComponent {
 	};
 
 	constructor(
-		private exampleservice: ExampleService,
+		private exampleservice: TaskerService,
 		private route: ActivatedRoute,
 		private router: Router
 	) {}

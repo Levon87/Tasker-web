@@ -1,5 +1,5 @@
 import { TestComponent } from "./test/test.component";
-import { ExampleService } from "./../../core/_ku/services/example.service";
+import { TaskerService } from "../../core/_ku/services/tasker.service";
 import { HttpKuUtilsService } from "./../../core/_ku/utils/http-ku-utils.service";
 // Angular
 import { NgModule } from "@angular/core";
@@ -9,7 +9,7 @@ import {
 	FormArray,
 	FormBuilder,
 	FormGroup,
-	ReactiveFormsModule
+	ReactiveFormsModule,
 } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
 // Partials
@@ -28,16 +28,22 @@ import {
 	MatInputModule,
 	MatChipsModule,
 	MatSelectModule,
-	MatCheckboxModule
+	MatCheckboxModule,
+	MatDatepickerModule,
 } from "@angular/material";
 import { UserEditComponent } from "./user-edit/user-edit.component";
 import { RouterModule } from "@angular/router";
 import { TeamsComponent } from "./teams/teams.component";
+import { TasksComponent } from "./tasks/tasks.component";
 import { MembersComponent } from "./members/members.component";
 import { CreateTeamComponent } from "./create-team/create-team.component";
 import { BrowserModule } from "@angular/platform-browser";
 import { EditTeamComponent } from "./edit-team/edit-team.component";
 import { MatListModule } from "@angular/material/list";
+import { EditTaskComponent } from "./edit-task/edit-task.component";
+import { ChildTaskComponent } from "./child-task/child-task.component";
+import { DeleteTaskComponent } from "./delete-task/delete-task.component";
+
 @NgModule({
 	declarations: [
 		TestComponent,
@@ -46,7 +52,11 @@ import { MatListModule } from "@angular/material/list";
 		TeamsComponent,
 		MembersComponent,
 		CreateTeamComponent,
-		EditTeamComponent
+		EditTeamComponent,
+		TasksComponent,
+		EditTaskComponent,
+		ChildTaskComponent,
+		DeleteTaskComponent,
 	],
 	exports: [],
 	imports: [
@@ -70,11 +80,12 @@ import { MatListModule } from "@angular/material/list";
 		BrowserModule,
 		MatChipsModule,
 		//NgModule,
-		MatInputModule
+		MatInputModule,
+		MatDatepickerModule,
 		//FormBuilder,
 		//FormGroup,
 		//FormArray
 	],
-	providers: [ExampleService, HttpKuUtilsService, KuHttpService]
+	providers: [TaskerService, HttpKuUtilsService, KuHttpService],
 })
 export class PagesModule {}

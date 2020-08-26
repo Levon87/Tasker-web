@@ -5,9 +5,13 @@ export class KuConfig {
 
 	static Login = "auth/login";
 
-	static GetTasks = "/web/userTask/get-all-tasks";
+	static GetTasks = "tasks/get-tasks";
 
-	static AddTasks = "/web/userTask/add-task";
+	static GetDetails = "tasks/get-details";
+
+	static AddTask = "tasks/add-task";
+
+	static RemoveTask = "tasks/remove-task";
 
 	static GetTeams = "teams/get-teams";
 
@@ -26,4 +30,8 @@ export class KuConfig {
 	static GetUserById = "users/get-user-by-id";
 
 	static AddTeamMember = "teams/add-team-member";
+
+	static GetTask = "tasks/get-task";
+
+	static EditTask = "tasks/edit-task";
 }

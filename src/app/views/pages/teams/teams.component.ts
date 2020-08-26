@@ -1,6 +1,6 @@
 import { Component, ViewChild, OnInit, ChangeDetectorRef } from "@angular/core";
 import { MatPaginator, MatTableDataSource } from "@angular/material";
-import { ExampleService } from "./../../../core/_ku/services/example.service";
+import { TaskerService } from "../../../core/_ku/services/tasker.service";
 import { DtoTeam } from "../../../core/_ku/ku_models/api/teamsDto";
 import { DtoTeamRequest } from "../../../core/_ku/ku_models/DtoTeamRequest";
 import { ActivatedRoute } from "@angular/router";
@@ -8,7 +8,7 @@ import { DtoMember } from "../../../core/_ku/ku_models/api/membersDto";
 
 @Component({
 	selector: "kt-teams",
-	templateUrl: "./teams.component.html"
+	templateUrl: "./teams.component.html",
 })
 export class TeamsComponent implements OnInit {
 	public teams: DtoTeam[] = [];
@@ -16,20 +16,20 @@ export class TeamsComponent implements OnInit {
 		name: "",
 		description: "",
 		leaderId: "",
-		members: []
+		members: [],
 	};
 	public users: DtoMember[] = [];
 	public user: DtoMember = {
 		id: "",
 		firstName: "",
 		//isDeleted: "",
-		lastName: ""
+		lastName: "",
 		//	role: "",
 	};
 	dataSource: MatTableDataSource<DtoTeam>;
 
 	constructor(
-		private exampleservice: ExampleService,
+		private taskerservice: TaskerService,
 		private cdr: ChangeDetectorRef,
 		private route: ActivatedRoute
 	) {}
@@ -38,7 +38,7 @@ export class TeamsComponent implements OnInit {
 		"description",
 		"leaderId",
 		"members",
-		"actions"
+		"actions",
 	];
 
 	ngOnInit() {
@@ -57,14 +57,14 @@ export class TeamsComponent implements OnInit {
 	//   this.exampleservice.getTeams();
 	// }
 	public getUsers() {
-		this.exampleservice.getUsers().subscribe(data => {
+		this.taskerservice.getUsers().subscribe((data) => {
 			this.users = data.users;
 		});
 	}
 
 	public getTeams() {
-		this.exampleservice.getTeams().subscribe(data => {
-			this.teams = data.teams;		 
+		this.taskerservice.getTeams().subscribe((data) => {
+			this.teams = data.teams;
 			this.dataSource = new MatTableDataSource<DtoTeam>(this.teams);
 			this.cdr.detectChanges();
 		});
@@ -74,9 +74,9 @@ export class TeamsComponent implements OnInit {
 	public RemoveTeamMember(): void {
 		//this.id = this.route.snapshot.paramMap.get("id");
 		let request: DtoTeamRequest = {
-			teamId: this.team.id
+			teamId: this.team.id,
 		};
-		this.exampleservice.RemoveTeamMember(request).subscribe(data => {
+		this.taskerservice.RemoveTeamMember(request).subscribe((data) => {
 			console.log(data);
 		});
 	}

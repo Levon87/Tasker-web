@@ -1,0 +1,465 @@
+<kt-portlet>
+	<!-- PORTLET LOADING | Binded to TABLE Datasource -->
+	<!-- See prop => '~/core/_crud/models/data-sources/_base.datasource.ts' (loading$) -->
+	<kt-portlet-header
+		[title]="'Tasks list'"
+		[class]="'kt-portlet__head--lg tasksHeader'"
+	>
+		<ng-container ktPortletTools>
+			<mat-form-field [formGroup]="filterbyStatusForm" appearance="fill">
+				<mat-label><h5>Filter by Status</h5></mat-label>
+
+				<!-- <mat-label><h4>Projects</h4></mat-label> -->
+				<mat-select formControlName="status" multiple>
+					<mat-option
+						#allSelectedStatus
+						(click)="toggleAllStatusSelection()"
+						value="All"
+						>All</mat-option
+					>
+
+					<mat-option
+						*ngFor="let status of statuses"
+						[value]="status"
+						(click)="toggleStatusPerOne(allSelectedStatus.value)"
+						>{{ status }}</mat-option
+					>
+				</mat-select>
+			</mat-form-field>
+			<mat-form-field
+				[formGroup]="filterProjectNameForm"
+				appearance="fill"
+			>
+				<mat-label><h5>Filter by Projects</h5></mat-label>
+
+				<!-- <mat-label><h4>Projects</h4></mat-label> -->
+				<mat-select formControlName="projectName" multiple>
+					<mat-option
+						#allSelected
+						(click)="toggleAllSelection()"
+						value="All"
+						>All</mat-option
+					>
+
+					<mat-option
+						*ngFor="let projectName of projectNames"
+						[value]="projectName"
+						(click)="togglePerOne(allSelected.value)"
+						>{{ projectName }}</mat-option
+					>
+				</mat-select>
+			</mat-form-field>
+			<mat-form-field
+				[formGroup]="filterAssignUserNameForm"
+				appearance="fill"
+			>
+				<mat-label><h5>Filter by assigned user</h5></mat-label>
+
+				<!-- <mat-label><h4>Projects</h4></mat-label> -->
+				<mat-select formControlName="user" multiple>
+					<mat-option
+						#allSelectedUser
+						(click)="toggleAllUserSelection()"
+						value="All"
+						>All</mat-option
+					>
+
+					<mat-option
+						*ngFor="let user of users"
+						[value]="user.id"
+						(click)="toggleUserPerOne(allSelectedUser.value)"
+						>{{ user.firstName }} {{ user.lastName }}</mat-option
+					>
+				</mat-select>
+			</mat-form-field>
+			<button
+				(click)="openCentred(content8)"
+				class="btn btn-primary kt-margin-r-20"
+				mat-raised-button
+				color="primary"
+				matTooltip="Create new Task"
+			>
+				Add Task
+			</button>
+			<!-- Buttons (Material Angular) | See off.documenations 'https://material.angular.io/components/button/overview' -->
+			<!-- mat-raised-button | Rectangular contained button w/ elevation  -->
+		</ng-container>
+	</kt-portlet-header>
+	<!-- end::Header -->
+	<!-- start::Body (attribute: ktPortletBody) -->
+	<kt-portlet-body>
+		<!-- MATERIAL TABLE | Binded to datasources -->
+		<!-- See off.documentations 'https://material.angular.io/components/table/overview' -->
+		<div class="mat-table__wrapper">
+			<mat-table #table [dataSource]="dataSource">
+				<!-- Position Column -->
+				<!-- <ng-container matColumnDef="id">
+				  <mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
+				  <mat-cell *matCellDef="let element"> {{element.id}} </mat-cell>
+				</ng-container> -->
+				<ng-container matColumnDef="projectName">
+					<mat-header-cell *matHeaderCellDef>
+						Project name
+					</mat-header-cell>
+					<mat-cell *matCellDef="let element">
+						{{ element.projectName }}
+					</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="currentTaskId">
+					<mat-header-cell *matHeaderCellDef>
+						Task number
+					</mat-header-cell>
+					<mat-cell *matCellDef="let element">
+						{{ element.currentTaskId }}
+					</mat-cell>
+				</ng-container>
+				<!-- Lastname Column -->
+				<ng-container matColumnDef="description">
+					<mat-header-cell *matHeaderCellDef>
+						Description
+					</mat-header-cell>
+					<mat-cell *matCellDef="let element">
+						{{ element.description }}
+					</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="recordDate">
+					<mat-header-cell *matHeaderCellDef>
+						Record date
+					</mat-header-cell>
+					<mat-cell *matCellDef="let element">
+						{{ element.recordDate }}
+					</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="startDateTime">
+					<mat-header-cell *matHeaderCellDef>
+						Start date
+					</mat-header-cell>
+					<mat-cell *matCellDef="let element">
+						{{ element.startDateTime }}
+					</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="deadLine">
+					<mat-header-cell *matHeaderCellDef>
+						Deadline
+					</mat-header-cell>
+					<mat-cell *matCellDef="let element">
+						{{ element.deadline }}
+					</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="taskType">
+					<mat-header-cell *matHeaderCellDef>
+						Task type
+					</mat-header-cell>
+					<mat-cell *matCellDef="let element">
+						{{ element.taskType }}
+					</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="status">
+					<mat-header-cell *matHeaderCellDef>
+						Status
+					</mat-header-cell>
+					<mat-cell *matCellDef="let element">
+						{{ element.status }}
+					</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="estimateHours">
+					<mat-header-cell *matHeaderCellDef>
+						Estimate hours
+					</mat-header-cell>
+					<mat-cell *matCellDef="let element">
+						{{ element.estimateHours }}
+					</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="actualHours">
+					<mat-header-cell *matHeaderCellDef>
+						Actual Hours
+					</mat-header-cell>
+					<mat-cell *matCellDef="let element">
+						{{ element.actualHours }}
+					</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="completedPercent">
+					<mat-header-cell *matHeaderCellDef>
+						Completed percent
+					</mat-header-cell>
+					<mat-cell *matCellDef="let element">
+						{{ element.completedPercent + "%" }}
+					</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="userInfo">
+					<mat-header-cell *matHeaderCellDef>
+						Assigned user
+					</mat-header-cell>
+					<mat-cell *matCellDef="let element">
+						{{ element?.user.firstName }}
+						{{ element?.user.lastName }}
+					</mat-cell>
+				</ng-container>
+				<ng-container matColumnDef="actions">
+					<mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
+					<mat-cell
+						*matCellDef="let task"
+						(click)="$event.stopPropagation()"
+						value="task.id"
+					>
+						<button
+							mat-button
+							[value]="task.id"
+							(click)="openDialog(task.id)"
+						>
+							<mat-icon>delete</mat-icon>
+						</button>
+					</mat-cell>
+				</ng-container>
+				<!-- Specialization Column -->
+				<!-- Role Column -->
+				<mat-header-row
+					*matHeaderRowDef="displayedColumns"
+				></mat-header-row>
+				<mat-row
+					*matRowDef="let row; columns: displayedColumns"
+					[routerLink]="['edit-task', row.id]"
+				></mat-row>
+
+				<!-- <ng-container matColumnDef="actions">
+					<mat-header-cell *matHeaderCellDef>
+						Actions
+					</mat-header-cell>
+					<mat-cell *matCellDef="let element">
+						<button
+							(click)="openCentred()"
+							mat-icon-button
+							matTooltip="Remove Task"
+							openCentred
+						>
+							<mat-icon>delete</mat-icon></button
+						>&nbsp;
+					</mat-cell>
+				</ng-container> -->
+			</mat-table>
+		</div>
+		<!-- start: BOTTOM -->
+		<div class="mat-table__bottom">
+			<!-- MATERIAL SPINNER | Url: 'https://material.angular.io/components/progress-spinner/overview' -->
+			<!-- <mat-spinner [diameter]="20" *ngIf="dataSource.loading$ | async"></mat-spinner> -->
+			<!-- MATERIAL PAGINATOR | Binded to dasources -->
+			<!-- See off.documentations 'https://material.angular.io/components/paginator/overview' -->
+			<mat-paginator
+				#paginator
+				[pageSize]="10"
+				[pageSizeOptions]="[5, 10, 20]"
+				[showFirstLastButtons]="true"
+			>
+			</mat-paginator>
+		</div>
+
+		<!-- end: BOTTOM -->
+	</kt-portlet-body>
+	<!-- end::Body -->
+</kt-portlet>
+<div class="example-preview">
+	<div>
+		<ng-template #content8 let-c="close" let-d="dismiss">
+			<div class="modal-header">
+				<h4 class="modal-title">Add Task</h4>
+				<button
+					type="button"
+					class="close"
+					aria-label="Close"
+					(click)="d('Cross click')"
+				>
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<mat-form-field class="mat-form-field-fluid">
+					<mat-label><h5>Project Name</h5></mat-label>
+					<mat-select
+						[(ngModel)]="task.projectName"
+						name="projectName"
+						(selectionChange)="chooseTaskType(task.projectName)"
+					>
+						<mat-option
+							*ngFor="let projectName of projectNames"
+							[value]="projectName"
+						>
+							{{ projectName }}
+						</mat-option>
+					</mat-select>
+				</mat-form-field>
+				<mat-form-field class="mat-form-field-fluid">
+					<mat-label> <h5>Task Description</h5></mat-label>
+					<input matInput [(ngModel)]="task.description" />
+				</mat-form-field>
+				<mat-form-field class="mat-form-field-fluid">
+					<mat-label> <h5>Status</h5></mat-label>
+					<mat-select
+						[(ngModel)]="task.status"
+						name="status"
+						(selectionChange)="taskStatus(task.status)"
+					>
+						<mat-option
+							*ngFor="let status of statuses"
+							[value]="status"
+							>{{ status }}
+						</mat-option>
+					</mat-select>
+				</mat-form-field>
+				<mat-form-field class="mat-form-field-fluid">
+					<mat-label> <h5>Estimate hours</h5></mat-label>
+					<input matInput [(ngModel)]="task.estimateHours" />
+				</mat-form-field>
+
+				<!-- <mat-form-field >
+					<mat-label> <h5>Start Date</h5></mat-label>
+					<input matInput [matDatepicker]="task.startDateTime" />
+
+					<mat-datepicker-toggle
+						matSuffix
+						[for]="task.startDateTime"
+					></mat-datepicker-toggle>
+					<mat-datepicker #picker></mat-datepicker>
+				</mat-form-field> -->
+
+				<!-- <mat-form-field class="input-min">
+			<mat-label><h5>Start date</h5></mat-label>
+			<input
+				matInput
+				[matDatepicker]="startDatePicker"
+				[(ngModel)]="task.startDateTime"
+				(click)="startDatePicker.open()"
+			/>
+			<mat-datepicker #startDatePicker></mat-datepicker>
+		</mat-form-field> -->
+
+				<mat-form-field class="mat-form-field-fluid">
+					<mat-label> <h5>Start Date</h5></mat-label>
+					<input
+						matInput
+						[matDatepicker]="startDatePicker"
+						disabled
+						placeholder="Choose a date"
+						[(ngModel)]="task.startDateTime"
+					/>
+					<mat-datepicker-toggle
+						matSuffix
+						[for]="startDatePicker"
+					></mat-datepicker-toggle>
+					<mat-datepicker
+						#startDatePicker
+						disabled="false"
+					></mat-datepicker>
+				</mat-form-field>
+				<mat-form-field class="mat-form-field-fluid">
+					<mat-label> <h5>Deadline</h5></mat-label>
+					<input
+						matInput
+						[matDatepicker]="dp3"
+						disabled
+						placeholder="Choose a date"
+						[(ngModel)]="task.deadline"
+					/>
+					<mat-datepicker-toggle
+						matSuffix
+						[for]="dp3"
+					></mat-datepicker-toggle>
+					<mat-datepicker #dp3 disabled="false"></mat-datepicker>
+				</mat-form-field>
+				<mat-form-field class="mat-form-field-fluid">
+					<mat-label><h5>Assign User</h5></mat-label>
+					<mat-select
+						[(ngModel)]="user.id"
+						name="id"
+						(selectionChange)="assignUser(user.id)"
+					>
+						<mat-option *ngFor="let user of users" [value]="user.id"
+							>{{ user.firstName }}{{ user.lastName }}
+						</mat-option>
+					</mat-select>
+				</mat-form-field>
+				<mat-form-field class="mat-form-field-fluid">
+					<mat-label><h5>Task Type</h5></mat-label>
+					<mat-select
+						[(ngModel)]="task.taskType"
+						name="taskType"
+						(selectionChange)="chooseTaskType(task.taskType)"
+					>
+						<mat-option
+							*ngFor="let taskType of taskTypes"
+							[value]="taskType"
+						>
+							{{ taskType }}
+						</mat-option>
+					</mat-select>
+				</mat-form-field>
+			</div>
+			<div class="modal-footer">
+				<button
+					type="button"
+					class="btn btn-secondary"
+					(click)="c('Close click')"
+				>
+					Close
+				</button>
+				<button
+					type="button"
+					class="btn btn-primary"
+					(click)="AddTask(task)"
+				>
+					Save
+				</button>
+			</div>
+		</ng-template>
+	</div>
+</div>
+<!-- <div>
+	<div class="modal-header">
+		<button
+			type="button"
+			class="close"
+			aria-label="Close"
+			(click)="close()"
+		>
+			<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+	<div class="modal-body">
+		<h1>Delete task from tasklist?</h1>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-secondary" (click)="close()">
+			Close
+		</button>
+		<button type="button" class="btn btn-danger" (click)="RemoveTask()">
+			Delete
+		</button>
+	</div>
+</div> -->
+<ng-template>
+	<div class="modal-header">
+		<h4 class="modal-title">Modal title</h4>
+		<button
+			type="button"
+			class="close"
+			aria-label="Close"
+			(click)="('Cross click')"
+		>
+			<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+	<div class="modal-body">
+		<h1>Delete task from tasklist?</h1>
+	</div>
+	<div class="modal-footer">
+		<button
+			type="button"
+			class="btn btn-secondary"
+			(click)="('Close click')"
+		>
+			Close
+		</button>
+		<button type="button" class="btn btn-primary" (click)="RemoveTask()">
+			Save changes
+		</button>
+	</div>
+</ng-template>

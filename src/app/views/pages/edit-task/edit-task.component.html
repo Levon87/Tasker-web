@@ -1,0 +1,367 @@
+<kt-portlet>
+	<kt-portlet-header [title]="'Edit-Task'" [class]="'kt-portlet__head--lg'">
+		<ng-container ktPortletTools>
+			<a
+				[routerLink]="['/tasks']"
+				class="btn btn-secondary kt-margin-r-10"
+				mat-raised-button
+				matTooltip="Back to the users list"
+			>
+				<i class="la la-arrow-left"></i>
+				<span class="kt-hidden-mobile">Back</span>
+			</a>
+
+			<button
+				(click)="openModal()"
+				class="btn btn-primary kt-margin-r-15"
+				mat-raised-button
+				color="primary"
+				matTooltip="Create new Task"
+			>
+				Add a Subtask
+			</button>
+
+			<!-- <a href="javascript:;" class="btn btn-secondary kt-margin-r-10"  mat-raised-button matTooltip="Reset changes">
+				<i class="la la-cog"></i>
+				<span class="kt-hidden-mobile">Reset</span>
+			</a> -->
+
+			<button
+				(click)="UpdateTask()"
+				class="btn btn-primary kt-margin-r-10"
+				color="primary"
+				mat-raised-button
+				matTooltip="Save & Continue"
+			>
+				<span class="kt-hidden-mobile">Update Task</span>
+			</button>
+			<!-- <button mat-icon-button [matMenuTriggerFor]="menu" color="primary">
+				<mat-icon>more_vert</mat-icon>
+			</button> -->
+			<mat-menu #menu="matMenu">
+				<button mat-menu-item color="primary">Save & Exit</button>
+				<button mat-menu-item color="primary">Save & Duplicate</button>
+				<button mat-menu-item color="primary">Save & Continue</button>
+			</mat-menu>
+		</ng-container>
+	</kt-portlet-header>
+
+	<kt-portlet-body>
+		<mat-tab-group>
+			<mat-tab>
+				<!-- <ng-template mat-tab-label>
+					<i class="mat-tab-label-icon fa fa-user"></i>
+					Basic info
+				</ng-template> -->
+				<ng-template matTabContent>
+					<!--begin::Form-->
+					<div>
+						<form class="kt-form kt-form--group-seperator-dashed">
+							<!-- <kt-alert  type="warn" [showCloseButton]="true" [duration]="10000" >
+								Oh snap! Change a few things up and try submitting again.
+							</kt-alert> -->
+							<div
+								class="kt-form__section kt-form__section--first"
+							>
+								<div class="form-group kt-form__group row">
+									<div
+										class="col-lg-4 kt-margin-bottom-20-mobile"
+									>
+										<mat-form-field
+											class="mat-form-field-fluid"
+										>
+											<mat-label>
+												<h5>
+													Task Description
+												</h5></mat-label
+											>
+											<input
+												matInput
+												[(ngModel)]="task.description"
+												name="description"
+											/>
+										</mat-form-field>
+									</div>
+									<div
+										class="col-lg-4 kt-margin-bottom-20-mobile"
+									>
+										<mat-form-field
+											class="mat-form-field-fluid"
+										>
+											<mat-label>
+												<h5>Status</h5></mat-label
+											>
+											<mat-select
+												[(ngModel)]="task.status"
+												name="status"
+												value="task.status"
+											>
+												<mat-option
+													*ngFor="
+														let status of statuses
+													"
+													[value]="status"
+													>{{ status }}
+												</mat-option>
+											</mat-select>
+										</mat-form-field>
+									</div>
+								</div>
+								<div class="form-group kt-form__group row">
+									<div
+										class="col-lg-4 kt-margin-bottom-20-mobile"
+									>
+										<mat-form-field
+											class="mat-form-field-fluid"
+										>
+											<mat-label>
+												<h5>Start Date</h5></mat-label
+											>
+											<input
+												matInput
+												[(ngModel)]="task.startDateTime"
+												name="startDateTime"
+											/>
+										</mat-form-field>
+									</div>
+								</div>
+								<div class="form-group kt-form__group row">
+									<div
+										class="col-lg-4 kt-margin-bottom-20-mobile"
+									>
+										<mat-form-field
+											class="mat-form-field-fluid"
+										>
+											<mat-label>
+												<h5>Deadline</h5></mat-label
+											>
+											<mat-cell *matCellDef="let task">
+												{{ task.deadline }}
+											</mat-cell>
+											<input
+												matInput
+												[(ngModel)]="task.deadline"
+												name="deadline"
+											/>
+										</mat-form-field>
+									</div>
+								</div>
+								<div class="form-group kt-form__group row">
+									<div
+										class="col-lg-4 kt-margin-bottom-20-mobile"
+									>
+										<mat-form-field
+											class="mat-form-field-fluid"
+										>
+											<mat-label>
+												<h5>
+													Estimate hours
+												</h5></mat-label
+											>
+											<input
+												matInput
+												name="estimateHours"
+												[(ngModel)]="task.estimateHours"
+											/>
+										</mat-form-field>
+									</div>
+								</div>
+
+								<div class="form-group kt-form__group row">
+									<div
+										class="col-lg-4 kt-margin-bottom-20-mobile"
+									>
+										<mat-form-field
+											class="mat-form-field-fluid"
+										>
+											<mat-label>
+												<h5>Actual Hours</h5></mat-label
+											>
+											<input
+												matInput
+												[(ngModel)]="task.actualHours"
+												name="actualHours"
+											/>
+										</mat-form-field>
+									</div>
+								</div>
+								<div class="form-group kt-form__group row">
+									<div
+										class="col-lg-4 kt-margin-bottom-20-mobile"
+									>
+										<mat-form-field
+											class="mat-form-field-fluid"
+										>
+											<mat-label
+												><h5>Assign User</h5></mat-label
+											>
+											<mat-select
+												[(ngModel)]="userr.userId"
+												name="userId"
+												(selectionChange)="assignUser()"
+											>
+												<mat-option
+													*ngFor="let user of users"
+													[value]="user.id"
+													>{{ user.firstName
+													}}{{ user.lastName }}
+												</mat-option>
+											</mat-select>
+										</mat-form-field>
+									</div>
+								</div>
+
+								<div class="form-group kt-form__group row">
+									<div
+										class="col-lg-4 kt-margin-bottom-20-mobile"
+									>
+										<mat-form-field
+											class="mat-form-field-fluid"
+										>
+											<mat-label
+												><h5>Task Type</h5></mat-label
+											>
+											<mat-select
+												name="taskType"
+												[(ngModel)]="task.taskType"
+											>
+												<mat-option
+													*ngFor="
+														let taskType of taskTypes
+													"
+													[value]="taskType"
+													>{{ taskType }}
+												</mat-option>
+											</mat-select>
+										</mat-form-field>
+									</div>
+								</div>
+								<div class="form-group kt-form__group row">
+									<div
+										class="col-lg-4 kt-margin-bottom-20-mobile"
+									></div>
+								</div>
+
+								<button
+									type="button"
+									class="btn btn-primary"
+									(click)="UpdateTask()"
+								>
+									Save
+								</button>
+							</div>
+						</form>
+					</div>
+					<!--end::Form-->
+				</ng-template>
+			</mat-tab>
+		</mat-tab-group>
+	</kt-portlet-body>
+</kt-portlet>
+<!-- <div class="example-preview">
+	<div>
+		<ng-template #content8 let-c="close" let-d="dismiss">
+			<div class="modal-header">
+				<h4 class="modal-title">Add a SubTask</h4>
+				<button
+					type="button"
+					class="close"
+					aria-label="Close"
+					(click)="d('Cross click')"
+				>
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<mat-form-field class="mat-form-field-fluid">
+					<mat-label><h5>Project Name</h5></mat-label>
+					<mat-select
+						[(ngModel)]="childtask.projectName"
+						name="projectName"
+						(selectionChange)="chooseTaskType(task.projectName)"
+					>
+						<mat-option
+							*ngFor="let projectName of projectNames"
+							[value]="projectName"
+						>
+							{{ projectName }}
+						</mat-option>
+					</mat-select>
+				</mat-form-field>
+				<mat-form-field class="mat-form-field-fluid">
+					<mat-label> <h5>Task Description</h5></mat-label>
+					<input matInput [(ngModel)]="childtask.description" />
+				</mat-form-field>
+				<mat-form-field class="mat-form-field-fluid">
+					<mat-label> <h5>Status</h5></mat-label>
+					<mat-select
+						[(ngModel)]="childtask.status"
+						name="status"
+						(selectionChange)="taskStatus(childtask.status)"
+					>
+						<mat-option
+							*ngFor="let status of statuses"
+							[value]="status"
+							>{{ status }}
+						</mat-option>
+					</mat-select>
+				</mat-form-field>
+				<mat-form-field class="mat-form-field-fluid">
+					<mat-label> <h5>Estimate hours</h5></mat-label>
+					<input matInput [(ngModel)]="task.estimateHours" />
+				</mat-form-field>
+				<mat-form-field class="mat-form-field-fluid">
+					<mat-label> <h5>Start Date</h5></mat-label>
+					<input matInput [(ngModel)]="task.startDateTime" />
+				</mat-form-field>
+				<mat-form-field class="mat-form-field-fluid">
+					<mat-label> <h5>Deadline</h5></mat-label>
+					<input matInput [(ngModel)]="task.deadline" />
+				</mat-form-field>
+				<mat-form-field class="mat-form-field-fluid">
+					<mat-label><h5>Assign User</h5></mat-label>
+					<mat-select
+						[(ngModel)]="user.id"
+						name="id"
+						(selectionChange)="editAssignUser(user.id)"
+					>
+						<mat-option *ngFor="let user of users" [value]="user.id"
+							>{{ user.firstName }}{{ user.lastName }}
+						</mat-option>
+					</mat-select>
+				</mat-form-field>
+				<mat-form-field class="mat-form-field-fluid">
+					<mat-label><h5>Task Type</h5></mat-label>
+					<mat-select
+						[(ngModel)]="task.taskType"
+						name="taskType"
+						(selectionChange)="chooseTaskType(task.taskType)"
+					>
+						<mat-option
+							*ngFor="let taskType of taskTypes"
+							[value]="taskType"
+						>
+							{{ taskType }}
+						</mat-option>
+					</mat-select>
+				</mat-form-field>
+			</div>
+			<div class="modal-footer">
+				<button
+					type="button"
+					class="btn btn-secondary"
+					(click)="c('Close click')"
+				>
+					Close
+				</button>
+				<button
+					type="button"
+					class="btn btn-primary"
+					(click)="addChildTask(task)"
+				>
+					Save
+				</button>
+			</div>
+		</ng-template>
+	</div>
+</div> -->

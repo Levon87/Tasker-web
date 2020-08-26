@@ -1,0 +1,8 @@
+::ng-deep {
+	.cdk-overlay-container {
+		z-index: 1051 !important;
+		.mat-select-panel {
+			font-size: 15px !important;
+		}
+	}
+}

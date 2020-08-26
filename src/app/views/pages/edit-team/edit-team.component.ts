@@ -1,6 +1,6 @@
 import { Component, ViewChild, OnInit, ChangeDetectorRef } from "@angular/core";
 import { MatPaginator, MatTableDataSource } from "@angular/material";
-import { ExampleService } from "./../../../core/_ku/services/example.service";
+import { TaskerService } from "../../../core/_ku/services/tasker.service";
 import { DtoTeam } from "../../../core/_ku/ku_models/api/teamsDto";
 import { ActivatedRoute, ParamMap, Router } from "@angular/router";
 import { DtoTeamRequest } from "../../../core/_ku/ku_models/DtoTeamRequest";
@@ -8,7 +8,7 @@ import { DtoMember } from "../../../core/_ku/ku_models/api/membersDto";
 
 @Component({
 	selector: "kt-edit-team",
-	templateUrl: "./edit-team.component.html"
+	templateUrl: "./edit-team.component.html",
 })
 export class EditTeamComponent implements OnInit {
 	public teamId: DtoTeamRequest;
@@ -17,21 +17,21 @@ export class EditTeamComponent implements OnInit {
 		name: "",
 		description: "",
 		leaderId: "",
-		members: []
+		members: [],
 	};
 	public users: DtoMember[] = [];
 	public user: DtoMember = {
 		id: "",
 		firstName: "",
-		//isDeleted: "",
-		lastName: ""
+		isDeleted: "",
+		lastName: "",
 		//	role: "",
 	};
 	dataSource: MatTableDataSource<DtoTeam>;
 	selectedId: number;
 
 	constructor(
-		private exampleservice: ExampleService,
+		private exampleservice: TaskerService,
 		private cdr: ChangeDetectorRef,
 		private route: ActivatedRoute,
 		private router: Router
@@ -46,10 +46,10 @@ export class EditTeamComponent implements OnInit {
 
 	private getTeam() {
 		let request: DtoTeamRequest = {
-			teamId: this.id
+			teamId: this.id,
 		};
 
-		this.exampleservice.getTeam(request).subscribe(data => {
+		this.exampleservice.getTeam(request).subscribe((data) => {
 			this.team = data;
 
 			this.cdr.detectChanges();
@@ -64,7 +64,7 @@ export class EditTeamComponent implements OnInit {
 	}
 
 	public getUsers() {
-		this.exampleservice.getUsers().subscribe(data => {
+		this.exampleservice.getUsers().subscribe((data) => {
 			this.users = data.users;
 		});
 	}

@@ -1,0 +1,93 @@
+<div>
+	<div class="modal-header">
+		<h4 class="modal-title">Add Subtask</h4>
+		<button
+			type="button"
+			class="close"
+			aria-label="Close"
+			(click)="close()"
+		>
+			<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+	<div class="modal-body">
+		<mat-form-field class="mat-form-field-fluid">
+			<mat-label> <h5>Task Description</h5></mat-label>
+			<input matInput [(ngModel)]="task.description" />
+		</mat-form-field>
+		<mat-form-field class="mat-form-field-fluid">
+			<mat-label> <h5>Status</h5></mat-label>
+			<mat-select
+				[(ngModel)]="task.status"
+				name="status"
+				(selectionChange)="taskStatus(task.status)"
+			>
+				<mat-option *ngFor="let status of statuses" [value]="status"
+					>{{ status }}
+				</mat-option>
+			</mat-select>
+		</mat-form-field>
+
+		<mat-form-field class="mat-form-field-fluid">
+			<mat-label> <h5>Estimate hours</h5></mat-label>
+			<input matInput [(ngModel)]="task.estimateHours" />
+		</mat-form-field>
+
+		<mat-form-field class="input-min">
+			<mat-label><h5>Start date</h5></mat-label>
+			<input
+				matInput
+				[matDatepicker]="startDatePicker"
+				[(ngModel)]="task.startDateTime"
+				(click)="startDatePicker.open()"
+			/>
+			<mat-datepicker #startDatePicker></mat-datepicker>
+		</mat-form-field>
+		<mat-form-field class="input-min">
+			<mat-label> <h5>Deadline</h5></mat-label>
+			<input
+				matInput
+				[matDatepicker]="deadlinePicker"
+				[(ngModel)]="task.deadline"
+				(click)="deadlinePicker.open()"
+			/>
+			<mat-datepicker #deadlinePicker></mat-datepicker>
+		</mat-form-field>
+
+		<mat-form-field class="mat-form-field-fluid">
+			<mat-label><h5>Assign User</h5></mat-label>
+			<mat-select
+				[(ngModel)]="user.id"
+				name="id"
+				(selectionChange)="assignUser(user.id)"
+			>
+				<mat-option *ngFor="let user of users" [value]="user.id"
+					>{{ user.firstName }}{{ user.lastName }}
+				</mat-option>
+			</mat-select>
+		</mat-form-field>
+		<mat-form-field class="mat-form-field-fluid">
+			<mat-label><h5>Task Type</h5></mat-label>
+			<mat-select
+				[(ngModel)]="task.taskType"
+				name="taskType"
+				(selectionChange)="chooseTaskType(task.taskType)"
+			>
+				<mat-option
+					*ngFor="let taskType of taskTypes"
+					[value]="taskType"
+				>
+					{{ taskType }}
+				</mat-option>
+			</mat-select>
+		</mat-form-field>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-secondary" (click)="close()">
+			Close
+		</button>
+		<button type="button" class="btn btn-primary" (click)="AddSubTask()">
+			Save changes
+		</button>
+	</div>
+</div>

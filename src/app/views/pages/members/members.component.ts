@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectorRef } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { MatTableDataSource } from "@angular/material";
 import { DtoTeamRequest } from "../../../core/_ku/ku_models/DtoTeamRequest";
-import { ExampleService } from "../../../core/_ku/services/example.service";
+import { TaskerService } from "../../../core/_ku/services/tasker.service";
 import { DtoTeam } from "../../../core/_ku/ku_models/api/teamsDto";
 import { DtoMember } from "../../../core/_ku/ku_models/api/membersDto";
 
@@ -30,7 +30,7 @@ export class MembersComponent implements OnInit {
 
 	constructor(
 		private route: ActivatedRoute,
-		private exampleservice: ExampleService,
+		private exampleservice: TaskerService,
 		private cdr: ChangeDetectorRef
 	) {}
 	//dataSource: MatTableDataSource<DtoTeam>;

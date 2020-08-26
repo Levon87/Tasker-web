@@ -1,11 +1,32 @@
+import { DtoUserInfo } from "./DtoUserInfo";
+
 export class DtoTasks {
-	items: DtoTask[];
+	tasks: DtoTask[];
+	taskTypes: [];
+	statuses: [];
+	projectNames: [];
+}
+export class DtoTaskResponse {
+	task?: DtoTask;
+	taskTypes: [];
+	statuses: [];
+	projectNames: [];
 }
 
 export class DtoTask {
-	id?: string;
-	title: string;
-	description: string;
+	id?: any;
+	description?: string;
 	status?: string;
-	userId?: string;
+	currentTaskId?: string;
+	recordDate?: string;
+	startDateTime?: string;
+	deadline?: string;
+	projectName?: string;
+	taskType?: string;
+	estimateHours?: string;
+	actualHours?: string;
+	completedPercent?: string;
+	childTaskId?: string[];
+	parentId?: string;
+	user?: DtoUserInfo;
 }

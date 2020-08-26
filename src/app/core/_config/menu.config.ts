@@ -8,31 +8,37 @@ export class MenuConfig {
 					root: true,
 					alignment: "left",
 					page: "/dashboard",
-					translate: "MENU.DASHBOARD"
+					translate: "MENU.DASHBOARD",
 				},
 				{
 					title: "Test",
 					root: true,
 					alignment: "left",
-					page: "/test"
+					page: "/test",
 				},
 				{
 					title: "Users",
 					root: true,
 					alignment: "left",
-					page: "/users"
+					page: "/users",
 				},
 				{
 					title: "User-Edit",
 					root: true,
 					alignment: "left",
-					page: "/user-edit"
+					page: "/user-edit",
 				},
 				{
 					title: "Teams",
 					root: true,
 					alignment: "left",
-					page: "/teams"
+					page: "/teams",
+				},
+				{
+					title: "Tasks",
+					root: true,
+					alignment: "left",
+					page: "/tasks",
 				},
 				// {
 				// 	title: 'Members',
@@ -53,25 +59,25 @@ export class MenuConfig {
 							submenu: [
 								{
 									title: "Wizard 1",
-									page: "/wizard/wizard-1"
+									page: "/wizard/wizard-1",
 								},
 								{
 									title: "Wizard 2",
-									page: "/wizard/wizard-2"
+									page: "/wizard/wizard-2",
 								},
 								{
 									title: "Wizard 3",
-									page: "/wizard/wizard-3"
+									page: "/wizard/wizard-3",
 								},
 								{
 									title: "Wizard 4",
-									page: "/wizard/wizard-4"
-								}
-							]
-						}
-					]
-				}
-			]
+									page: "/wizard/wizard-4",
+								},
+							],
+						},
+					],
+				},
+			],
 		},
 		aside: {
 			self: {},
@@ -82,7 +88,7 @@ export class MenuConfig {
 					icon: "flaticon2-architecture-and-city",
 					page: "/dashboard",
 					translate: "MENU.DASHBOARD",
-					bullet: "dot"
+					bullet: "dot",
 				},
 				{ section: "Custom" },
 				{
@@ -93,24 +99,24 @@ export class MenuConfig {
 					submenu: [
 						{
 							title: "Wizard 1",
-							page: "/wizard/wizard-1"
+							page: "/wizard/wizard-1",
 						},
 						{
 							title: "Wizard 2",
-							page: "/wizard/wizard-2"
+							page: "/wizard/wizard-2",
 						},
 						{
 							title: "Wizard 3",
-							page: "/wizard/wizard-3"
+							page: "/wizard/wizard-3",
 						},
 						{
 							title: "Wizard 4",
-							page: "/wizard/wizard-4"
-						}
-					]
-				}
-			]
-		}
+							page: "/wizard/wizard-4",
+						},
+					],
+				},
+			],
+		},
 	};
 
 	public get configs(): any {

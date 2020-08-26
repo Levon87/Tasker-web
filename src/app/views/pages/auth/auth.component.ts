@@ -1,15 +1,25 @@
 // Angular
-import { Component, ElementRef, OnInit, Renderer2, ViewEncapsulation } from '@angular/core';
+import {
+	Component,
+	ElementRef,
+	OnInit,
+	Renderer2,
+	ViewEncapsulation,
+} from "@angular/core";
 // Layout
-import { LayoutConfigService, SplashScreenService, TranslationService } from '../../../core/_base/layout';
+import {
+	LayoutConfigService,
+	SplashScreenService,
+	TranslationService,
+} from "../../../core/_base/layout";
 // Auth
-import { AuthNoticeService } from '../../../core/auth';
+import { AuthNoticeService } from "../../../core/auth";
 
 @Component({
-	selector: 'kt-auth',
-	templateUrl: './auth.component.html',
-	styleUrls: ['./auth.component.scss'],
-	encapsulation: ViewEncapsulation.None
+	selector: "kt-auth",
+	templateUrl: "./auth.component.html",
+	styleUrls: ["./auth.component.scss"],
+	encapsulation: ViewEncapsulation.None,
 })
 export class AuthComponent implements OnInit {
 	// Public properties
@@ -32,8 +42,8 @@ export class AuthComponent implements OnInit {
 		private layoutConfigService: LayoutConfigService,
 		public authNoticeService: AuthNoticeService,
 		private translationService: TranslationService,
-		private splashScreenService: SplashScreenService) {
-	}
+		private splashScreenService: SplashScreenService
+	) {}
 
 	/**
 	 * @ Lifecycle sequences => https://angular.io/guide/lifecycle-hooks
@@ -43,7 +53,9 @@ export class AuthComponent implements OnInit {
 	 * On init
 	 */
 	ngOnInit(): void {
-		this.translationService.setLanguage(this.translationService.getSelectedLanguage());
+		this.translationService.setLanguage(
+			this.translationService.getSelectedLanguage()
+		);
 		this.headerLogo = this.layoutConfigService.getLogo();
 
 		this.splashScreenService.hide();
@@ -55,10 +67,10 @@ export class AuthComponent implements OnInit {
 	 */
 	private loadCSS(styleUrl: string) {
 		return new Promise((resolve, reject) => {
-			const styleElement = document.createElement('link');
+			const styleElement = document.createElement("link");
 			styleElement.href = styleUrl;
-			styleElement.type = 'text/css';
-			styleElement.rel = 'stylesheet';
+			styleElement.type = "text/css";
+			styleElement.rel = "stylesheet";
 			styleElement.onload = resolve;
 			this.render.appendChild(this.el.nativeElement, styleElement);
 		});
